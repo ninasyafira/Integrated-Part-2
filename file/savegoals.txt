@@ -1,0 +1,8 @@
+John,child,j2,Game,02-01-2018,2
+John,child,j2,Game,09-01-2018,7
+John,parent,john1,toy,15-01-2018,20
+Amy,parent,amy1,Car,24-01-2018,300
+Amy,child,denise,Dress,25-01-2018,50
+Mary,parent,Mary,Car,24-12-2019,10000
+Mary,parent,Mary,Printer,15-04-2018,600
+Mary,child,Mary,Camera,10-5-2018,2000

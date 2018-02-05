@@ -1,0 +1,10 @@
+John,child,john99,Game,30,10,D,x,a
+Amy,child,amy99,bag,20,5,A,x,a
+Amy,parent,Amy,PS4,400,30,A,x,a
+Amy,child,amy97,Pen,2,2,A,x,a
+John,parent,james1,Basketball,100,30,A,x,a
+John,child,james2,soccer ball,50,60,A,x,a
+John,parent,John,iphone,100,30,A,x,a
+John,child,james1,Shirt,100,30,A,x,a
+John,parent,qwer26465,gogmui,43453,123,D,x,a
+Mary,parent,Mary,perfume,200,20,D,x,a

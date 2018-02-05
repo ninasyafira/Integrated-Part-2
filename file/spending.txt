@@ -1,0 +1,17 @@
+John,800,2017-12-15,item xxx
+Amy,100,2017-11-15,item xxx
+John,150,2017-12-15,item xxx
+John,500,2018-01-15,item xxx
+John,2400,2018-01-20,item xxx
+Amy,150,2017-12-15,item xxx
+Amy,100,2018-01-15,item xxx
+Amy,600,2017-12-30,item xxx
+John,500,2017-11-24,item xxx
+John,600,2017-12-30,item xxx
+Amy,200,2018-01-20,item xxx
+Amy,500,2017-11-24,item xxx
+Amy,625,2018-02-20,item xxx
+Amy,550,2018-02-24,item xxx
+John,785,2018-02-14,item xxx
+John,435,2018-02-18,item xxx
+Mary,550,2018-02-3,Clothes

@@ -1,0 +1,171 @@
+{% extends 'layout.html' %}
+{% block body %}
+    {% from "includes/_formhelper.html" import render_field %}
+    {% if form.errors %}
+        <div class="alert alert-danger">
+            <ul>
+                {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+                    {% for error in field_errors %}
+                        <li>{{ form[field_name].label }}: {{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    <div class="text-center">
+        <h1>This is spending details page</h1>
+        <p><span>{{ todayDate }}</span></p>
+    </div>
+    <div>
+        <h3>Month: <span>{{ checkMM }}</span>&nbsp&nbsp&nbspYear: <span>{{ checkYY }}</span></h3>
+        {% if count == 0 %}
+            <p>You have no spendings</p>
+        {% else %}
+            <p>You have <span>{{ count }}</span> spendings</p>
+        {% endif %}
+    </div>
+    <div>
+        <table style="width:100%">
+            <tr>
+                <th>name</th>
+                <th>item</th>
+                <th>amount</th>
+                <th>date</th>
+            </tr>
+            {% for spend in spendings %}
+                <tr>
+                    <td>{{ spend.get_userid() }}</td>
+                    <td>{{ spend.get_item() }}</td>
+                    <td>SGD ${{ '%.2f' %spend.get_amount() |float}}</td>
+                    <td>{{ spend.get_datespend() }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <h3>total spending SGD ${{ '%.2f' %spendtotal |float }}</h3>
+    <h3>spending max limit SGD ${{ '%.2f' %spendmax |float }}</h3>
+    <div class='pie-header'>
+        <meta HTTP-EQUIV="X-UA-COMPATIBLE" CONTENT="IE=EmulateIE9">
+        <script type="text/javascript" src="../static/scripts/d3.min.js"></script>
+        <script type="text/javascript" src="../static/scripts/radialProgress.js"></script>
+        <link type="text/css" rel="stylesheet" href="../static/styles/style.css">
+        <style>
+
+            * {
+            font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
+        }
+
+        body {
+            background-color: white;
+            color: black;
+        }
+
+            #test .arc2 {
+                stroke-weight: 0.1;
+                fill: #b00d08;
+            }
+
+            #outer {
+                background: #FFFFFF;
+                border-radius: 5px;
+                color: white;
+            }
+
+            #div1, #div2, #div3, #div4 {
+                width: 33%;
+                height: 200px;
+                box-sizing: border-box;
+                float: left;
+            }
+
+            #div2 .arc {
+                stroke-weight: 0.1;
+                fill: #f0a417;
+            }
+
+            #div2 .arc2 {
+                stroke-weight: 0.1;
+                fill: #b00d08;
+            }
+
+            #div3 .arc {
+                stroke-weight: 0.1;
+                fill: #1d871b;
+            }
+
+            .selectedRadial {
+                border-radius: 3px;
+                background: #f4f4f4;
+                color: #000;
+                box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
+                -moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
+                border: 1px solid rgba(200, 200, 200, 0.85);
+            }
+
+            .radial {
+                border-radius: 3px;
+                background: #FFFFFF;
+                color: white;
+            }
+
+        </style>
+    </div>
+    <div class='pie-body'>
+        <div id='outer' style="margin-top:40px; padding:10px">
+            <div id="main" style="width:600px; height:200px; margin: 0px auto; ">
+                <div id="div1"></div>
+                <div id="div3"></div>
+                <div id="div2"></div>
+            </div>
+        </div>
+    </div>
+    <script language="JavaScript">
+        var div3 = d3.select(document.getElementById('div3'));
+        start();
+
+        function onClick3() {
+            deselect();
+            div3.attr("class", "selectedRadial");
+        }
+
+        function deselect() {
+            div3.attr("class", "radial");
+        }
+
+        function start() {
+            var rp3 = radialProgress(document.getElementById('div3'))
+                .label("spending")
+                .onClick(onClick3)
+                .diameter(150)
+                .minValue(0)
+                .maxValue({{spendmax}})
+                .value({{spendtotal}})
+                .render();
+        }
+    </script>
+    <div class="'form">
+        <form method="POST" action="/checkspend">
+            <div class="form-group">
+                {{ render_field(form.monthStr, class_="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ render_field(form.yearStr,class_="form-control") }}
+            </div>
+            <input type="submit" value="Search" class="btn btn-info" onclick="check()"/>
+        </form>
+    </div>
+
+
+
+
+
+<br><br>
+    <div class="'form">
+    <h2>set spending limit</h2>
+<form action="{{ url_for('formlimit') }}" method="post">
+    {{ render_field(formlimit.month,class_="form-control") }}
+    {{ render_field(formlimit.year,class_="form-control") }}
+    {{ render_field(formlimit.limit,class_="form-control") }}
+<input type="submit" name="submit" value="Confirm Limit">
+</form>
+{% endblock %}

@@ -1,0 +1,226 @@
+{% extends 'layout.html' %}
+{% block body %}
+    {% from "includes/_formhelper.html" import render_field %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>After Login</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+
+        * {
+            font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
+        }
+
+        body {
+            background-color: black;
+            color: white;
+        }
+
+        .dropbtn {
+            background-color: gray;
+            color: white;
+            padding: 5px;
+            font-size: 26px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 175px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: #3e8e41;
+        }
+
+        #warning {
+            font-weight: bolder;
+            font-size: 150%;
+            background-color: red;
+            color: white;
+        }
+
+        table, th, td {
+            border: 1px solid #E0346A;
+            border-collapse: collapse;
+        }
+
+        th {
+            background-color: #E0346A ;
+        }
+
+        th, td {
+            padding : 15px;
+        }
+
+</style>
+</head>
+<body>
+
+<div>
+    <table style="width:100%">
+        <tr>
+            <th>Name</th>
+            <th>Your goal item</th>
+            <th>Initial saving date</th>
+            <th>How much more to reach your goal</th>
+            <th>Targeted goal saving</th>
+            <th>Total interest earned</th>
+            <th> </th>
+        </tr>
+        {% for user in users %}
+            {% if user.get_type() == 'p' %}
+        <tr>
+            <td>{{ user.get_name() }}</td>
+            <td>{{ user.get_goalType() }}</td>
+            <td>{{ user.get_start() }}</td>
+            <td>${{ user.get_left() }}</td>
+            <td>${{ user.get_goal() }}</td>
+            <td>${{ user.get_interest() }}</td>
+            <td><a href="/updateNina/{{ user.get_name() }}${{ user.get_goalType() }}" class="btn btn-warning">Details</a></td>
+        </tr>
+            {% else %}
+        <br>
+        <br>
+        <tr>
+            <th>Name (Child)</th>
+            <th>{{ user.get_name() }}'s goal item</th>
+            <th>Initial saving date</th>
+            <th>How much more to reach {{ user.get_name() }}'s goal</th>
+            <th>Targeted goal saving</th>
+            <th>Total interest earned</th>
+            <th> </th>
+        </tr>
+
+        <tr>
+            <td>{{ user.get_name() }}</td>
+            <td>{{ user.get_goalType() }}</td>
+            <td>{{ user.get_start() }}</td>
+            <td>${{ user.get_left() }}</td>
+            <td>${{ user.get_goal() }}</td>
+            <td>${{ user.get_interest() }}</td>
+            <td><a href="/updateNina/{{ user.get_name() }}${{ user.get_goalType() }}" class="btn btn-warning">Details</a></td>
+        </tr>
+            {% endif %}
+        {% endfor %}
+        </table>
+    </div>
+
+<br>
+<br>
+<br>
+<hr>
+
+{% for limit in limits %}
+    {% if limit.get_type() == 'p' and limit.get_spend() > limit.get_limit() %}
+        <h2>Spending Overview</h2>
+        <p>Your spending limit is $ {{ limit.get_limit() }}</p>
+        <p>You have spent <span style='font-weight:bold;font-size: 150%;'>over</span> your spending limit!</p>
+        <p>Overspent by : <span id="warning">$ {{ over }}</span></p>
+
+    {% else %}
+        <h2>Spending Overview</h2>
+        <p>Your spending limit for this month is $ {{ limit.get_limit() }}</p>
+        <p>You spent $ {{ limit.get_spend() }}</p>
+        <p>You have spent <span style='font-weight:bold;font-size: 150%; background-color: darkseagreen;'>within</span> your spending limit!</p>
+    {% endif %}
+{% endfor %}
+
+<br>
+<br>
+<hr>
+
+<div>
+    <table style="width:100%">
+        <tr>
+            <th>Name</th>
+            <th>Your goal item:</th>
+            <th>Saved amount:</th>
+            <th>Saved date:</th>
+        </tr>
+        {% for h in displayHistory %}
+       <tr>
+            <td>{{ h.get_name() }}</td>
+            <td>{{ h.get_goalType() }}</td>
+            <td>{{ h.get_saving() }}</td>
+            <td>{{ h.get_saveDate() }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<br>
+<br>
+<br>
+<hr>
+
+<h2>Select month to see your previous records</h2>
+<br>
+<div class="'form">
+        <form method="POST" action="/selected">
+            <div class="form-group">
+                {{ render_field(form.month, class_="form-control") }}
+            </div>
+            <div class="form-group col-md-1">
+                    <input type="submit" value="Submit" class="btn btn-info"/>
+                </div>
+        </form>
+
+
+{% if count == 0 %}
+    <p>You have no records this month</p>
+{% else %}
+    <p>Here are your records for this month :</p>
+{% endif %}
+
+</div>
+
+<div>
+    <table style="width:100%">
+        <tr>
+            <th>Saved date</th>
+            <th>Saved amount</th>
+            <th>Goal item</th>
+        </tr>
+        {% for user in users %}
+       <tr>
+            <td>{{ user.get_month() }}</td>
+            <td>{{ user.get_saving() }}</td>
+            <td>{{ user.get_goalType() }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+
+
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,149 @@
+{% extends 'layout.html' %}
+{% block body %}
+<head>
+    <style>
+
+* {
+            font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
+        }
+
+body {
+            background-color: black;
+            color: white;
+        }
+/* Style the tab */
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #E0346A;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #E0346A;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    -webkit-animation: fadeEffect 1s;
+    animation: fadeEffect 1s;
+}
+
+/* Fade in tabs */
+@-webkit-keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+</style>
+</head>
+<body>
+
+<h2>Rewards</h2>
+<h3>Hello <span>{{ userid }}! </span><span>You currently have {{ userpoint }} points!</span></h3>
+
+<div class="tab">
+  <button class="tablinks" onclick="openTab(event, 'currentrewards')">Current Rewards</button>
+  <button class="tablinks" onclick="openTab(event, 'currentrewardsavailable')">Rewards Available for Redemption</button>
+  <button class="tablinks" onclick="openTab(event, 'ideasforrewards')">Ideas for Rewards</button>
+</div>
+
+<div id="currentrewards" class="tabcontent">
+  <h3>Reward History</h3>
+<div>
+        {% if count == 0 %}
+            <p>You have no rewards</p>
+        {% else %}
+            <p>You have redeemed <span>{{ count }}</span> rewards</p>
+        {% endif %}
+    </div>
+
+    <div>
+        <table cellpadding="30">
+            <tr>
+                <th>User ID      </th>
+                <th>Points Used      </th>
+                <th>Reward      </th>
+                <th>Redemption Date      </th>
+                <th>Used?</th>
+            </tr>
+            {% for u in users %}
+        <tr>
+            <td>{{ u.get_userid() }}</td>
+            <td>{{ u.get_point() }}</td>
+            <td>{{ u.get_item() }}</td>
+            <td>{{ u.get_redeemdate() }}</td>
+            <td>{{ u.get_used() }}</td>
+        </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+<div id="currentrewardsavailable" class="tabcontent">
+  <h3>Available Rewards for Redemption</h3>
+  <div>
+    <table style="width:100%">
+
+        <tr>
+            <th>S/N   </th>
+            <th>Reward   </th>
+            <th>Points to be deducted   </th>
+        </tr>
+        {% for a in rewards %}
+        <tr>
+            <td>{{ a.get_number() }}</td>
+            <td>{{ a.get_reward() }}</td>
+            <td>{{ a.get_deduct() }}</td>
+            <td><a href="/update/{{a.get_reward()}}${{ userid }}${{ a.get_deduct() }}" class="btn btn-warning">Redeem!</a></td>
+        </tr>
+        {% endfor %}
+        </table>
+    </div>
+
+</div>
+
+<div id="ideasforrewards" class="tabcontent">
+  <h3>Ideas for Reward</h3>
+    <p>Have any burning ideas for us to include into our existing rewards list? Do go to this link to fill in a <a href="/forms">form</a> to let us know!</p>
+</div>
+
+<script>
+function openTab(evt, content) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(content).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+</script>
+{% endblock %}

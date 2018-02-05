@@ -1,0 +1,13 @@
+Mary,1400,100,$10 Off Pierre Cardin,2017-10-15,50
+Mary,1350,100,Paintball $5 Off,2017-11-29,25
+Mary,17000,100,$10 Lazada Voucher,2017-12-28,50
+Jeff,1190,80,dbc,2018-01-25,2
+Jeff,1190,80,abc,2018-01-25,2
+Jeff,12000,80,ebc,2018-01-25,2
+John,11000,80,dbc,2018-01-25,2
+John,11000,80,dbc,2018-01-25,2
+
+Mary,16500,SGD 5 off a Grab ride,2018-02-05,No
+Mary,16000,SGD 5 off a Grab ride,2018-02-05,No
+Mary,15900,One month free Spotify Premium Subscription,2016-02-05,No
+Mary,15800,One month free Spotify Premium Subscription,2018-02-05,No

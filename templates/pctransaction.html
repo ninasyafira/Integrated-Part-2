@@ -1,0 +1,90 @@
+{% from "includes/_formhelper.html" import render_field %}
+{% extends 'layout.html' %}
+{% block body %}
+
+    <head>
+    <style>
+        * {
+            font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
+        }
+
+        body {
+            background-color: black;
+            color: white;
+        }
+
+        .jumbotron {
+            background-color: #E0346A;
+        }
+    </style>
+    </head>
+
+ <div>
+        <a href="/registerchild" class="btn btn-warning">Register Child</a>
+    </div>
+
+    <div class="jumbotron text-center">
+        <h1>Summary</h1>
+    </div>
+
+    <div>
+
+        {% if count == 0 %}
+            <p>You have no account registered</p>
+        {% else %}
+            <p>You have <span>{{ count }}</span> Child Account Registered</p>
+        {% endif %}
+    </div>
+
+    <div>
+    <table style="width:100%">
+
+        <tr>
+            <th>Parent</th>
+            <th>Bank</th>
+            <th>Month</th>
+            <th>Year</th>
+            <th>Child</th>
+            <th>Child Account</th>
+            <th>Amount (Monthly)</th>
+            <th><a href="/editamount" class="btn btn-warning">Update</a></th>
+            <td><a href = "/deletechild" class =" btn btn-warning">Delete</a></td>
+        </tr>
+        <tbody>
+        {% for user in child %}
+        <tr>
+            <td>{{ user.get_parent() }}</td>
+            <td>{{ user.get_bank() }}</td>
+            <td>{{ user.get_month() }}</td>
+            <td>{{ user.get_year() }}</td>
+            <td>{{ user.get_child() }}</td>
+            <td>{{ user.get_account() }}</td>
+            <td>{{ user.get_amount()}}</td>
+
+
+
+
+
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+    </div>
+
+    <!--Limit spending modal-->
+
+
+    {############################################################################}
+
+     <div class="jumbotron text-center">
+        <h1>Transaction Summary</h1>
+    </div>
+    <div>
+        {% for i in TEST %}
+            <p>{{ i }} total transaction ${{ totalDepositAmount }}</p>
+        {% endfor %}
+    </div>
+
+
+
+{% endblock %}

@@ -1,0 +1,161 @@
+{% extends'layout.html' %}
+{% block body %}
+
+<style>
+
+* {
+            font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: black;
+            color: black;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .jumbotron {
+            background-color: #E0346A;
+        }
+
+    @import url(https://fonts.googleapis.com/css?family=Raleway:400,700);
+
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+.container {
+  position: relative;
+  width: 80%;
+  margin: 0 auto;
+}
+
+form {
+  position: relative;
+  width: 45%;
+  margin: 50px auto;
+  padding: 50px;
+  background: white;
+  text-align: center;
+    border-radius: 20px;
+}
+
+input {
+  display: inline-block;
+  width: 100%;
+  margin: 20px 0;
+  padding: 10px;
+  border: 2px dashed lightblue;
+  outline: none;
+  font-size: 20px;
+  font-family: 'Economica', 'Arial', sans-serif;
+  font-weight: 400;
+  transition: all 0.2s ease;
+}
+
+input:focus { border-color: deepskyblue; }
+
+button {
+  position: absolute;
+  left: calc(50% - 150px / 2);
+  bottom: calc(-50px / 2);
+  width: 150px;
+  height: 50px;
+  padding: 10px 20px 10px 20px;
+  margin-top: 20px;
+  border-radius:28px;
+  outline: none;
+  cursor: pointer;
+  color: #FFFFFF;
+  font-family: 'Economica', 'Arial', sans-serif;
+  font-size: 20px;
+  background: #2840de;
+  transition: all 0.2s ease;
+}
+
+button:hover {
+    background:#6d79e8;
+    background-image: linear-gradient(to bottom, #6d79e8, #2c83bd);
+}
+
+button.valid,
+button.valid:hover { background: mediumseagreen; }
+
+svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+svg path {
+  stroke-width: 10px;
+  stroke: mediumseagreen;
+  fill: none;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+svg path.hidden { opacity: 0; }
+
+svg path.animate { animation: drawBorder 1s linear; }
+
+@keyframes drawBorder {
+  from {
+    stroke-dasharray: 4000;
+    stroke-dashoffset: 4000;
+  }
+
+  to {
+    stroke-dasharray: 4000;
+    stroke-dashoffset: 0;
+  }
+}
+
+h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+</style>
+{% from "includes/_formhelper.html" import render_field %}
+    {% if form.errors %}
+        {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+            {% for error in field_errors %}
+                {{ form[field_name].label }}: {{ error }}
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+
+<form method="POST" action="">
+        <div class="form-group">
+                <div class="form-group">
+                {{ render_field(form.parent, class_="form-control") }}
+                </div>
+                <div class="form-group">
+                {{ render_field(form.bank, class_="form-control") }}
+                </div>
+                <div class="form-group">
+                </div>
+                <div class="form-group">
+                {{ render_field(form.child, class_="form-control") }}
+                </div>
+                <div class="form-group">
+                {{ render_field(form.account, class_="form-control") }}
+                </div> <div class="form-group">
+                {{ render_field(form.amount, class_="form-control") }}
+                </div>
+                <input type="submit" value="Register Child" class="btn btn-info">
+            </div>
+    </form>
+{% endblock %}

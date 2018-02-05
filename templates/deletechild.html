@@ -1,0 +1,29 @@
+{% from "includes/_formhelper.html" import render_field %}
+{% extends 'layout.html' %}
+{% block body %}
+
+    <head>
+    <style>
+        * {
+            font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
+        }
+
+        body {
+            background-color: black;
+            color: white;
+        }
+    </style>
+    </head>
+
+<form method="POST">
+				<div class="modal-body"><label for='inputlg'>Input the child name you want to Delete.</label>
+                    <div class = 'form-group'>
+                        {{ render_field(form.childName, class_='form-control') }}
+                    </div>
+				</div>
+				<div class="modal-footer">
+				<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+				<input type="submit" value="Confirm" class="btn btn-primary">
+                </div>
+                </form>
+{% endblock %}

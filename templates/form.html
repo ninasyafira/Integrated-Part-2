@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+{% block body %}
+    {% from "includes/_formhelper.html" import render_field %}
+    {% if form.errors %}
+    <div class="alert alert-danger">
+        <ul>
+            {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+                {% for error in field_errors %}
+                    <li>{{ form[field_name].label }}: {{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <div class="jumbotron text-center">
+        <h1>Tell Us Your Idea!</h1>
+    </div>
+     <form method="POST" action="">
+        <div class="form-group">
+            {{ render_field(form.rewardidea, class_="form-control") }}
+        </div>
+         <input type="submit" value="Submit" class="btn btn-info"/>
+    </form>
+{% endblock %}
